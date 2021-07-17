@@ -8,6 +8,7 @@ questions = ['Hi there', 'Are you ready to answer the questions? Please reply by
              'Did you use public transport today?', 'Have you had any contact with a COVID-19 patient?',
              'Do you have COVID-19 symptoms?', 'Are you complying with COVID-19 protocols?',
              'Thank you for answering all the questions. Have a nice day ahead']
+
 r = sr.Recognizer()
 m = sr.Microphone()
 
@@ -46,7 +47,7 @@ def transcribe():
             playsound('sounds/please-reply.mp3')
             with m as source:
                 # print("Please wait for 1 second")
-                r.adjust_for_ambient_noise(source, duration=1)
+                r.adjust_for_ambient_noise(source, duration=0.5)
                 audio = r.listen(source)
             try:
                 print("Did you say " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
