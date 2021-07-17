@@ -8,6 +8,8 @@ questions = ['Hi there', 'Are you ready to answer the questions? Please reply by
              'Did you use public transport today?', 'Have you had any contact with a COVID-19 patient?',
              'Do you have COVID-19 symptoms?', 'Are you complying with COVID-19 protocols?',
              'Thank you for answering all the questions. Have a nice day ahead']
+r = sr.Recognizer()
+m = sr.Microphone()
 
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{
   "type": "service_account",
@@ -22,6 +24,12 @@ GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/speech-trial%40favorable-sylph-320123.iam.gserviceaccount.com"
 }
 """
+reply = gTTS(text='Please reply now', lang='en', slow=False)
+if 'please-reply.mp3' not in os.listdir('sounds'):
+    reply.save('sounds/please-reply.mp3')
+else:
+    pass
+
 
 def transcribe():
     i = 0
@@ -33,31 +41,30 @@ def transcribe():
         else:
             playsound('sounds/trans' + sI + '.mp3')
         playsound('sounds/trans' + sI + '.mp3')
-        try:
-            print("Did you say " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
-        except sr.UnknownValueError:
-            print('I could not understand what you just said.\nPlease try again')
+        if i != 0:
+            time.sleep(0.5)
+            playsound('sounds/please-reply.mp3')
+            with m as source:
+                # print("Please wait for 1 second")
+                r.adjust_for_ambient_noise(source, duration=1)
+                audio = r.listen(source)
             try:
-                print(
-                    'Did you say ' + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
+                print("Did you say " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
             except sr.UnknownValueError:
-                print('I still cannot understand what you just said.')
-        except sr.RequestError as e:
-            print('Could not fetch results from Google Cloud Speech services; {0}'.format(e))
-
+                print('I could not understand what you just said.\nPlease try again')
+                try:
+                    print(
+                        'Did you say ' + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
+                except sr.UnknownValueError:
+                    print('I still cannot understand what you just said.')
+            except sr.RequestError as e:
+                print('Could not fetch results from Google Cloud Speech services; {0}'.format(e))
+        else:
+            pass
         i = i + 1
         time.sleep(2)
 
+
 transcribe()
 
-r = sr.Recognizer()
-m = sr.Microphone()
-
-with m as source:
-    print("Please wait for 1 second")
-
-    r.adjust_for_ambient_noise(source, duration=0.5)
-    audio = r.listen(source)
-    print("Please say something")
-
-
+print("Please say something")
