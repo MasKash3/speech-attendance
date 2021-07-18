@@ -28,4 +28,4 @@ jobs:
       - name: Run tests
         env:
             GOOGLE_CLOUD_SPEECH_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_SPEECH_CREDENTIALS }}
-        run: speech_questions.py
+        run: python speech_questions.py
