@@ -21,6 +21,7 @@ m = sr.Microphone()
 #json_data.append(data)
 #print(json_data[0])
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.load(open('google.json'))
+print(GOOGLE_CLOUD_SPEECH_CREDENTIALS)
 
 reply = gTTS(text='Please reply now', lang='en', slow=False)
 if 'please-reply.mp3' not in os.listdir('sounds'):
