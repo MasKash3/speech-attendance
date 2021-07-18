@@ -1,31 +1,31 @@
-# This is a basic workflow to help you get started with Actions
+name: Python environment
+on: [push, pull_request]
 
-name: CI
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  install-python:
     runs-on: windows-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run tests
-        env:
-            GOOGLE_CLOUD_SPEECH_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_SPEECH_CREDENTIALS }}
-        run: python speech_questions.py
+     - uses: actions/checkout@v2
+     - name: Install python
+    
+       uses: gabrielfalcao/pyenv-action@v7
+       with:
+          default: 3.9.6 # pick version 3.8.6
+          command: pip install -U pip
+        
+     - name: create environment
+       run: pyenv local 3.8.6 && python -mvenv .venv386
+       
+     - name: Install dependencies
+       run: pip install -r requirements.txt --upgrade pip
+       
+       
+     - name: setup pyenv
+       id: pyenv_installation
+       uses: "gabrielfalcao/pyenv-actionv@7"
+       
+     - name: debug pyenv
+       env: 
+        GOOGLE_CLOUD_SPEECH_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_SPEECH_CREDENTIALS }} 
+       run: echo ${{ steps.pyenv_installation.outputs.pyenv_root }}
