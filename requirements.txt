@@ -12,7 +12,7 @@ requests==2.26.0
 scipy==1.7.0 
 setuptools==57.1.0
 six==1.16.0
-SpeechRecognition=3.8.1 
+SpeechRecognition==3.8.1 
 urllib3==1.26.6
 wheel==0.36.2
 
