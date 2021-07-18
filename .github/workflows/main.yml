@@ -29,4 +29,4 @@ jobs:
         env:
             GOOGLE_CLOUD_SPEECH_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_SPEECH_CREDENTIALS }}
         run: |
-          run-command "$GOOGLE_CLOUD_SPEECH_CREDENTIALS"
+          nbdev_test_nbs
