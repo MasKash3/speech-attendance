@@ -4,7 +4,7 @@ import time
 from playsound import playsound
 from gtts import gTTS
 
-questions = ['Hi there', 'Are you ready to answer the questions? Please reply by yes or no',
+questions = ['Hi there', 'Are you ready to answer the questions?',
              'Did you use public transport today?', 'Have you had any contact with a COVID-19 patient?',
              'Do you have COVID-19 symptoms?', 'Are you complying with COVID-19 protocols?',
              'Thank you for answering all the questions. Have a nice day ahead']
@@ -26,7 +26,7 @@ GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{
 }
 """
 
-reply = gTTS(text='Please reply now', lang='en', slow=False)
+reply = gTTS(text='Please reply by yes or no', lang='en', slow=False)
 if 'please-reply.mp3' not in os.listdir('sounds'):
     reply.save('sounds/please-reply.mp3')
 else:
@@ -43,7 +43,7 @@ def transcribe():
         else:
             playsound('sounds/trans' + sI + '.mp3')
         playsound('sounds/trans' + sI + '.mp3')
-        if i != 0:
+        if i != 0 or i != 7:
             time.sleep(0.5)
             playsound('sounds/please-reply.mp3')
             with m as source:
@@ -68,5 +68,3 @@ def transcribe():
 
 
 transcribe()
-
-print("Please say something")
