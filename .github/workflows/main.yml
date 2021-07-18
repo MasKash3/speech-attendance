@@ -3,11 +3,11 @@ on: [push, pull_request]
 
 jobs:
   install-python:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     
     steps:
      - uses: actions/checkout@v2
-     - name: Install python
+     - name: Install python version
     
        uses: gabrielfalcao/pyenv-action@v7
        with:
