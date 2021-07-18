@@ -28,3 +28,5 @@ jobs:
       - name: Run code with secret
         env:
             GOOGLE_CLOUD_SPEECH_CREDENTIALS: ${{ secrets.GOOGLE_CLOUD_SPEECH_CREDENTIALS }}
+        run: |
+          run-command "$GOOGLE_CLOUD_SPEECH_CREDENTIALS"
