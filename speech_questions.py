@@ -25,6 +25,7 @@ GOOGLE_CLOUD_SPEECH_CREDENTIALS = r"""{
   "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/speech-trial%40favorable-sylph-320123.iam.gserviceaccount.com"
 }
 """
+
 reply = gTTS(text='Please reply now', lang='en', slow=False)
 if 'please-reply.mp3' not in os.listdir('sounds'):
     reply.save('sounds/please-reply.mp3')
