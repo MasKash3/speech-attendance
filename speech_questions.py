@@ -5,7 +5,7 @@ from playsound import playsound
 from gtts import gTTS
 import json
 
-questions = ['Hi there', 'Are you ready to answer the questions? Please reply by yes or no',
+questions = ['Hi there', 'Are you ready to answer the questions?',
              'Did you use public transport today?', 'Have you had any contact with a COVID-19 patient?',
              'Do you have COVID-19 symptoms?', 'Are you complying with COVID-19 protocols?',
              'Thank you for answering all the questions. Have a nice day ahead']
@@ -23,7 +23,7 @@ m = sr.Microphone()
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.load(open('google.json'))
 print(GOOGLE_CLOUD_SPEECH_CREDENTIALS)
 
-reply = gTTS(text='Please reply now', lang='en', slow=False)
+reply = gTTS(text='Please reply by yes or no', lang='en', slow=False)
 if 'please-reply.mp3' not in os.listdir('sounds'):
     reply.save('sounds/please-reply.mp3')
 else:
