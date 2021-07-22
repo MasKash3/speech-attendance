@@ -1,13 +1,11 @@
-Hi
+1 Hi
 
-Did you use public transport today?
+3 Did you use public transport today?
 
-Have you had any contact with a COVID-19 patient?
+4 Have you had any contact with a COVID-19 patient?
 
+5 Do you have COVID-19 symptoms?
 
-Do you have COVID-19 symptoms?
+6 Are you complying with COVID-19 protocols?
 
-
-Are you complying with COVID-19 protocols?
-
-Thank you for answering all the questions. Have a nice day ahead
+7 Thank you for answering all the questions. Have a nice day ahead
