@@ -47,7 +47,9 @@ def transcribe():
                 print(
                     "Did you say " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
             except sr.UnknownValueError:
+                playsound('sounds/fail-beep.wav')
                 print('I could not understand what you just said.\nPlease try again')
+                time.sleep(0.5)
                 try:
                     time.sleep(0.5)
                     playsound('sounds/start-beep.wav')
@@ -55,8 +57,12 @@ def transcribe():
                         'Did you say ' + r.recognize_google_cloud(audio,
                                                                   credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
                 except sr.UnknownValueError:
+                    time.sleep(0.5)
+                    playsound('sounds/fail-beep.wav')
                     print('I still cannot understand what you just said.')
             except sr.RequestError as e:
+                time.sleep(0.5)
+                playsound('sounds/fail-beep.wav')
                 print('Could not fetch results from Google Cloud Speech services; {0}'.format(e))
         else:
             pass
