@@ -75,8 +75,6 @@ else:
     pass
 
 
-# path = r"sounds/trans.mp3"
-
 def transcribe():
     i = 0
     for question in questions:
