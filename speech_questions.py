@@ -4,7 +4,6 @@ import time
 from playsound import playsound
 from gtts import gTTS
 import json
-import io
 
 questions = ['Hi there', 'Are you ready to answer the questions?',
              'Did you use public transport today?', 'Have you had any contact with a COVID-19 patient?',
@@ -19,11 +18,12 @@ m = sr.Microphone()
 google_json = json.load(open('google.json'))
 GOOGLE_CLOUD_SPEECH_CREDENTIALS = json.dumps(google_json)
 
-reply = gTTS(text='Please reply by yes or no', lang='en', slow=False)
+reply = gTTS(text='Please reply by yes or no after the beep', lang='en', slow=False)
+
 if 'please-reply.mp3' not in os.listdir('sounds'):
     reply.save('sounds/please-reply.mp3')
 else:
-    pass
+    reply.save('sounds/please-reply.mp3')
 
 
 def transcribe():
@@ -32,24 +32,28 @@ def transcribe():
         sI = str(i)
         trans = gTTS(text=question, lang='en', slow=False)
         if 'trans.mp3' not in os.listdir('sounds'):
-            trans.save('sounds/trans' + sI + '.mp3')
+            trans.save('sounds/trans-' + sI + '.mp3')
         else:
-            playsound('sounds/trans' + sI + '.mp3')
-        playsound('sounds/trans' + sI + '.mp3')
-        if i != 0:
+            playsound('sounds/trans-' + sI + '.mp3')
+        playsound('sounds/trans-' + sI + '.mp3')
+        if i != 0 and i != 6:
             time.sleep(0.5)
             playsound('sounds/please-reply.mp3')
             with m as source:
-                # print("Please wait for 1 second")
                 r.adjust_for_ambient_noise(source, duration=0.5)
+                playsound('sounds/start-beep.wav')
                 audio = r.listen(source)
             try:
-                print("Did you say " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
+                print(
+                    "Did you say " + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
             except sr.UnknownValueError:
                 print('I could not understand what you just said.\nPlease try again')
                 try:
+                    time.sleep(0.5)
+                    playsound('sounds/start-beep.wav')
                     print(
-                        'Did you say ' + r.recognize_google_cloud(audio, credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
+                        'Did you say ' + r.recognize_google_cloud(audio,
+                                                                  credentials_json=GOOGLE_CLOUD_SPEECH_CREDENTIALS))
                 except sr.UnknownValueError:
                     print('I still cannot understand what you just said.')
             except sr.RequestError as e:
@@ -61,5 +65,3 @@ def transcribe():
 
 
 transcribe()
-
-print("Please say something")
